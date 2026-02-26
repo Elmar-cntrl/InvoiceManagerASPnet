@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InvoiceManager.Api</name>
+    </assembly>
+    <members>
+        <member name="T:InvoiceManager.Api.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:InvoiceManager.Api.Migrations.AddAllEntities">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.AddAllEntities.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.AddAllEntities.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:InvoiceManager.Api.Migrations.AddAllEntities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
