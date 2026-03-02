@@ -3,6 +3,7 @@ using InvoiceManager.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InvoiceManager.Api.DTOs.CustomerDtos;
+using InvoiceManager.Api.Enums;
 
 namespace InvoiceManager.Api.Controllers;
 
@@ -70,11 +71,13 @@ public class CustomerController : ControllerBase
         if (customer == null)
             return NotFound();
 
-        var hasInvoices = await _context.Invoices
-            .AnyAsync(i => i.CustomerId == id);
+        var hasSentInvoice = await _context.Invoices
+            .AnyAsync(i => i.CustomerId == id 
+                           && i.Status == InvoiceStatus.Sent
+                           && i.DeletedAt == null);
 
-        if (hasInvoices)
-            return BadRequest("Cannot delete customer with invoices");
+        if (hasSentInvoice)
+            return BadRequest("Cannot delete customer with sent invoices");
 
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();

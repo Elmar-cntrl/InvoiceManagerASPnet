@@ -4,4 +4,6 @@ public class InvoiceCreateDto
 {
     public int CustomerId { get; set; }
     public string? Comment { get; set; }
+    
+    public List<InvoiceRowCreateDto> Rows { get; set; } = new();  /////
 }
