@@ -107,13 +107,61 @@ public class CustomerController : ControllerBase
     // get list
     //////////////////////////////////////////
     [HttpGet]
-    public async Task<ActionResult<List<CustomerReturnDto>>> GetAll()
+    public async Task<IActionResult> GetAll(
+        int page = 1,
+        int pageSize = 10,
+        string? search = null,
+        string sortBy = "id",
+        bool asc = true)
     {
-        var customers = await _context.Customers
+        var query = _context.Customers.AsQueryable();
+
+        //////////////////////////////
+        // FILTER
+        //////////////////////////////
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(c =>
+                c.Name.Contains(search) ||
+                c.Email.Contains(search));
+        }
+
+        //////////////////////////////
+        // SORT
+        //////////////////////////////
+        query = sortBy.ToLower() switch
+        {
+            "name" => asc
+                ? query.OrderBy(c => c.Name)
+                : query.OrderByDescending(c => c.Name),
+
+            "email" => asc
+                ? query.OrderBy(c => c.Email)
+                : query.OrderByDescending(c => c.Email),
+
+            _ => asc
+                ? query.OrderBy(c => c.Id)
+                : query.OrderByDescending(c => c.Id)
+        };
+
+        var total = await query.CountAsync();
+
+        //////////////////////////////
+        // PAGINATION
+        //////////////////////////////
+        var customers = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(c => MapToResponse(c))
             .ToListAsync();
 
-        return Ok(customers);
+        return Ok(new
+        {
+            TotalCount = total,
+            Page = page,
+            PageSize = pageSize,
+            Data = customers
+        });
     }
 
     //////////////////////////////////////////
